@@ -1,3 +1,5 @@
+import os
+import sys
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -225,12 +227,12 @@ def result_visualization(x_test, y_test, result):
 
 if __name__ == "__main__":
     # 读取数据
-    iris = pd.read_csv('E:\\GitHub\\iris_classification_BPNeuralNetwork\\bpnn_V1数据集\\iris_training.csv')
+    iris = pd.read_csv(os.path.dirname(os.path.abspath(__file__)) + '/bpnn_V1数据集/iris_training.csv')
     X = iris[['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth']].values.T  # T是转置
     Y = iris['species'].values
 
     # 将标签转换为独热编码
-    encoder = OneHotEncoder()
+    encoder = OneHotEncoder(drop='if_binary')
     Y = encoder.fit_transform(Y.reshape(Y.shape[0], 1))
     Y = Y.toarray().T
     Y = Y.astype('uint8')
@@ -243,7 +245,7 @@ if __name__ == "__main__":
     print("用时：" + str(round((end_time - start_time).microseconds / 1000)) + 'ms')
 
     # 对模型进行测试
-    data_test = pd.read_csv('E:\\GitHub\\iris_classification_BPNeuralNetwork\\bpnn_V1数据集\\iris_test.csv')
+    data_test = pd.read_csv(os.path.dirname(os.path.abspath(__file__)) + '/bpnn_V1数据集/iris_test.csv')
     x_test = data_test[['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth']].values.T
     y_test = data_test['species'].values
 
